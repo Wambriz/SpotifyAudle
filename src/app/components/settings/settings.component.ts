@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-settings',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  @Output() closeSettings = new EventEmitter<void>();
   difficultyOptions = ['5 secs', '10 secs', '15 secs'];
   selectedDifficulty = '5 secs';
   theme = 'Light Mode';
@@ -34,6 +35,10 @@ export class SettingsComponent implements OnInit {
     } else {
       document.body.classList.remove('dark-mode');
     }
+  }
+
+  close() {
+    this.closeSettings.emit();
   }
 
 }
