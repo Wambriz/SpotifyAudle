@@ -10,6 +10,7 @@
     <button>Play</button>
   </div>
 </div>
+<app-settings></app-settings>
 
 <div
   style="
@@ -19,7 +20,6 @@
     margin-top: 20vh;
   "
 >
-
   <div *ngIf="loadRandomSong">
     <h2>Random Song</h2>
     <p><strong>Title:</strong> {{ randomSong.name }}</p>
@@ -31,4 +31,3 @@
     <p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
   </div>
 </div>
-
