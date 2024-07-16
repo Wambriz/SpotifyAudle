@@ -11,3 +11,23 @@
   </div>
 </div>
 <app-settings></app-settings>
+
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20vh;
+  "
+>
+  <div *ngIf="loadRandomSong">
+    <h2>Random Song</h2>
+    <p><strong>Title:</strong> {{ randomSong.name }}</p>
+    <p><strong>Artist:</strong> {{ randomSong.artists[0].name }}</p>
+    <p><strong>Album:</strong> {{ randomSong.album.name }}</p>
+    <audio controls>
+      <source [attr.src]="randomSong.preview_url" type="audio/mpeg">
+    </audio>
+    <p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
+  </div>
+</div>

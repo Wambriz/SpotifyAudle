@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { SpotifyService } from '../spotify.service';
 import fetchFromSpotify, { request } from "../../services/api";
 
 const AUTH_ENDPOINT =
@@ -11,13 +12,14 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private spotifyService: SpotifyService) {} // Inject SpotifyService
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
+  randomSong: any;
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -28,7 +30,8 @@ export class HomeComponent implements OnInit {
         console.log("Token found in localstorage");
         this.authLoading = false;
         this.token = storedToken.value;
-        this.loadGenres(storedToken.value);
+        this.loadRandomSong();
+
         return;
       }
     }
@@ -41,37 +44,22 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
       this.authLoading = false;
       this.token = newToken.value;
-      this.loadGenres(newToken.value);
+      this.loadRandomSong();
+
     });
+
   }
 
-  loadGenres = async (t: any) => {
-    this.configLoading = true;
-
-    // #################################################################################
-    // DEPRECATED!!! Use only for example purposes
-    // DO NOT USE the recommendations endpoint in your application
-    // Has been known to cause 429 errors
-    // const response = await fetchFromSpotify({
-    //   token: t,
-    //   endpoint: "recommendations/available-genre-seeds",
-    // });
-    // console.log(response);
-    // #################################################################################
-    
-    this.genres = [
-      "rock",
-      "rap",
-      "pop",
-      "country",
-      "hip-hop",
-      "jazz",
-      "alternative",
-      "j-pop",
-      "k-pop",
-      "emo"
-    ]
-    this.configLoading = false;
+  loadRandomSong = async () => {
+    try {
+      console.log("calling random song");
+      const response = await this.spotifyService.getRandomSong(this.token);
+      this.randomSong = response.tracks[0];
+      console.log("found random song");
+      console.log(this.randomSong);
+    } catch (error) {
+      console.error('Error fetching random song', error);
+    }
   };
 
   setGenre(selectedGenre: any) {
