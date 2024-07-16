@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
   randomSong: any;
+  isSettingsOpen = false;
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -66,5 +67,18 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
+  }
+
+  toggleSettings(){
+    this.isSettingsOpen = !this.isSettingsOpen;
+  }
+  openSettings() {
+    console.log("opening");
+    this.isSettingsOpen = true;
+  }
+
+  closeSettings() {
+    console.log("closing");
+    this.isSettingsOpen = false;
   }
 }
