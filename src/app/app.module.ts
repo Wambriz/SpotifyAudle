@@ -10,6 +10,7 @@ import { HomeComponent } from "./home/home.component";
 import { SettingsComponent } from './components/settings/settings.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 import { LeaderboardService } from '../services/leaderboard.service';
+import { GameComponent } from './components/game/game.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SettingsComponent, LeaderboardComponent],
+  declarations: [AppComponent, HomeComponent, SettingsComponent, LeaderboardComponent, GameComponent],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule],
   providers: [LeaderboardService],
   bootstrap: [AppComponent],

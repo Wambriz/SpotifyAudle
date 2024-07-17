@@ -20,8 +20,13 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
   randomSong: any;
+  amount_of_songs: number = 5;
+
   timestamp: number = Date.now();
   isSettingsOpen = false;
+  
+  // need a empty list to store song objects
+  tracks: any;
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -32,7 +37,9 @@ export class HomeComponent implements OnInit {
         console.log("Token found in localstorage");
         this.authLoading = false;
         this.token = storedToken.value;
-        this.loadRandomSong();
+        // this.loadRandomSong();
+        this.fillTracks();
+
         return;
       }
     }
@@ -45,37 +52,40 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
       this.authLoading = false;
       this.token = newToken.value;
-      this.loadRandomSong();
+      // this.loadRandomSong();
+      this.fillTracks();
+
     });
+
   }
+  fillTracks() {
+    for(let i = 0; i < this.amount_of_songs; i++)
+    this.randomSong = null;
+    this.loadRandomSong();
+    this.tracks.push(this.randomSong)
+    console.log("tracks:");
+    
+    console.log(this.tracks);
+    
+  }
+
 
   loadRandomSong = async () => {
     try {
       console.log("calling random song");
-
       const response = await this.spotifyService.getRandomSong(this.token);
-
-      if (response.tracks && response.tracks.length > 0) {
-
-          this.randomSong = response.tracks[0];
-          let i = 1;
-
-          while(!(this.randomSong.preview_url) && i < 10){
-            console.log("preview url is " + response.tracks[i].preview_url)
-            console.log("preview url is null on iteration " + i);
-            this.randomSong = response.tracks[i];
-            i++;
-          }
-
-        this.timestamp = Date.now(); // Update timestamp to prevent caching
-        console.log("found random song");
-        console.log(this.randomSong);
-      } else {
-        console.error('No tracks found in response', response);
-      }
+      this.randomSong = response.tracks[0];
+      console.log("found random song");
+      console.log(this.randomSong);
     } catch (error) {
       console.error('Error fetching random song', error);
     }
+  };
+
+  setGenre(selectedGenre: any) {
+    this.selectedGenre = selectedGenre;
+    console.log(this.selectedGenre);
+    console.log(TOKEN_KEY);
   }
 
   toggleSettings(){
