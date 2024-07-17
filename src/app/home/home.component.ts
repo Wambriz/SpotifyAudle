@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
   randomSong: any;
+  timestamp: number = Date.now();
   isSettingsOpen = false;
 
   ngOnInit(): void {
@@ -32,7 +33,6 @@ export class HomeComponent implements OnInit {
         this.authLoading = false;
         this.token = storedToken.value;
         this.loadRandomSong();
-
         return;
       }
     }
@@ -46,18 +46,21 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.loadRandomSong();
-
     });
-
   }
 
   loadRandomSong = async () => {
     try {
       console.log("calling random song");
       const response = await this.spotifyService.getRandomSong(this.token);
-      this.randomSong = response.tracks[0];
-      console.log("found random song");
-      console.log(this.randomSong);
+      if (response.tracks && response.tracks.length > 0) {
+        this.randomSong = response.tracks[0];
+        this.timestamp = Date.now(); // Update timestamp to prevent caching
+        console.log("found random song");
+        console.log(this.randomSong);
+      } else {
+        console.error('No tracks found in response', response);
+      }
     } catch (error) {
       console.error('Error fetching random song', error);
     }

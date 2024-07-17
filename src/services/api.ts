@@ -31,8 +31,11 @@ const checkStatus = (response: any) => {
   }
   const error: any = new Error(response.statusText);
   error.response = response;
+  error.status = response.status;
+  error.headers = response.headers;
   throw error;
 };
+
 
 /**
  * Requests a URL, returning a promise
