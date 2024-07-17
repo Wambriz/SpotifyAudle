@@ -10,7 +10,6 @@
     <button>Play</button>
   </div>
 </div>
-<app-settings></app-settings>
 
 <div
   style="
@@ -20,14 +19,17 @@
     margin-top: 20vh;
   "
 >
-  <div *ngIf="loadRandomSong">
-    <h2>Random Song</h2>
-    <p><strong>Title:</strong> {{ randomSong.name }}</p>
-    <p><strong>Artist:</strong> {{ randomSong.artists[0].name }}</p>
-    <p><strong>Album:</strong> {{ randomSong.album.name }}</p>
-    <audio controls>
-      <source [attr.src]="randomSong.preview_url" type="audio/mpeg">
-    </audio>
-    <p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
-  </div>
+
+<div *ngIf="randomSong">
+  <h2>Random Song</h2>
+  <p><strong>Title:</strong> {{ randomSong.name }}</p>
+  <p><strong>Artist:</strong> {{ randomSong.artists[0]?.name }}</p>
+  <p><strong>Album:</strong> {{ randomSong.album?.name }}</p>
+  <audio controls *ngIf="randomSong.preview_url">
+    <source [src]="randomSong.preview_url + '?t=' + timestamp" type="audio/mpeg">
+  </audio>
+  <p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
 </div>
+
+
+<!-- https://p.scdn.co/mp3-preview/bf226d38169446d873b9dac09ed4b7918bac5cf0?cid=74f434552d40467782bc1bc64b12b2e9 -->
