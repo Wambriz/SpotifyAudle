@@ -1,15 +1,19 @@
 <div *ngIf="authLoading || configLoading">Loading...</div>
-<div *ngIf="!authLoading && !configLoading">
+<div class="home" *ngIf="!authLoading && !configLoading">
   <div>
     <h1>Audle</h1>
   </div>
-  <div>
-    Card:
+  <div class="home-card">
     <h3> How to play</h3>
     <p>this is how you play our game!</p>
     <button>Play</button>
   </div>
 </div>
+
+
+<button (click)="openSettings()">Settings</button>
+<app-settings *ngIf="isSettingsOpen" (closeSettings)="closeSettings()"></app-settings>
+
 
 <div
   style="

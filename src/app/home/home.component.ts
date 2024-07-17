@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   token: String = "";
   randomSong: any;
   timestamp: number = Date.now();
+  isSettingsOpen = false;
 
   ngOnInit(): void {
     this.authLoading = true;
@@ -64,4 +65,23 @@ export class HomeComponent implements OnInit {
       console.error('Error fetching random song', error);
     }
   };
+
+  setGenre(selectedGenre: any) {
+    this.selectedGenre = selectedGenre;
+    console.log(this.selectedGenre);
+    console.log(TOKEN_KEY);
+  }
+
+  toggleSettings(){
+    this.isSettingsOpen = !this.isSettingsOpen;
+  }
+  openSettings() {
+    console.log("opening");
+    this.isSettingsOpen = true;
+  }
+
+  closeSettings() {
+    console.log("closing");
+    this.isSettingsOpen = false;
+  }
 }

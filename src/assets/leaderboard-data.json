@@ -1,0 +1,22 @@
+[
+    {
+        "name": "John Doe",
+        "score": 1500
+    },
+    {
+        "name": "Jane Smith",
+        "score": 1400
+    },
+    {
+        "name": "Bob Johnson",
+        "score": 1300
+    },
+    {
+        "name": "Alice Williams",
+        "score": 1200
+    },
+    {
+        "name": "Michael Brown",
+        "score": 1100
+    }
+]
