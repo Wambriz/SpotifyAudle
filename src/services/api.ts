@@ -59,6 +59,11 @@ const fetchFromSpotify = ({ token, endpoint, params }: any) => {
     url += `?${paramString}`;
   }
   const options = { headers: { Authorization: `Bearer ${token}` } };
+
+  console.log("Fetching from " + url);
+  console.log("With options " + options);
+
+
   return request(url, options);
 };
 

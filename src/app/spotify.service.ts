@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import fetchFromSpotify from '../services/api';
 
 interface FetchParams {
-  available_markets: string[];
+  market: string;
+//  available_markets: string[];
+//  is_playable : boolean; 
+  //restrictions: Object[];
   limit: number;
   seed_genres: string[];
 }
@@ -25,8 +28,10 @@ export class SpotifyService {
 
     const endpoint = 'recommendations';
     const params: FetchParams = {
-      available_markets: ['US'],
-      limit: 1,
+      market: "US",
+     // available_markets: ["US"],
+     // restrictions: [reason: "market"],
+      limit: 10,
       seed_genres: ["alternative", "samba"]
     };
 

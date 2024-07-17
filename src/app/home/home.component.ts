@@ -52,9 +52,21 @@ export class HomeComponent implements OnInit {
   loadRandomSong = async () => {
     try {
       console.log("calling random song");
+
       const response = await this.spotifyService.getRandomSong(this.token);
+
       if (response.tracks && response.tracks.length > 0) {
-        this.randomSong = response.tracks[0];
+
+          this.randomSong = response.tracks[0];
+          let i = 1;
+
+          while(!(this.randomSong.preview_url) && i < 10){
+            console.log("preview url is " + response.tracks[i].preview_url)
+            console.log("preview url is null on iteration " + i);
+            this.randomSong = response.tracks[i];
+            i++;
+          }
+
         this.timestamp = Date.now(); // Update timestamp to prevent caching
         console.log("found random song");
         console.log(this.randomSong);
@@ -64,12 +76,6 @@ export class HomeComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching random song', error);
     }
-  };
-
-  setGenre(selectedGenre: any) {
-    this.selectedGenre = selectedGenre;
-    console.log(this.selectedGenre);
-    console.log(TOKEN_KEY);
   }
 
   toggleSettings(){
