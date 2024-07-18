@@ -1,19 +1,35 @@
-<div *ngIf="authLoading || configLoading">Loading...</div>
-<div *ngIf="!authLoading && !configLoading">
-  <div>
-    <h1>Audle</h1>
-  </div>
-  <div>
-    Card:
-    <h3> How to play</h3>
-    <p>this is how you play our game!</p>
-    <button>Play</button>
-  </div>
-</div>
-
-<!-- home.component.html -->
 <div>
-  <app-game></app-game> 
+  <h1>Audle</h1>
+</div>
+<div class="home-card">
+<div>
+  Card:
+  <h3> How to play</h3>
+  <p>this is how you play our game!</p>
+  <button>Play</button>
+</div>
 </div>
 
 
+<button (click)="openSettings()">Settings</button>
+<app-settings *ngIf="isSettingsOpen" (closeSettings)="closeSettings()"></app-settings>
+
+
+<!-- <div *ngIf="randomSong">
+<h2>Random Song</h2>
+<p><strong>Title:</strong> {{ randomSong.name }}</p>
+<p><strong>Artist:</strong> {{ randomSong.artists[0]?.name }}</p>
+<p><strong>Album:</strong> {{ randomSong.album?.name }}</p>
+<audio controls *ngIf="randomSong.preview_url">
+  <source [src]="randomSong.preview_url + '?t=' + timestamp" type="audio/mpeg">
+</audio>
+<p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
+</div> -->
+
+<!-- <app-game [tracks] = "tracks"> -->
+
+
+<!-- </app-game home.component.html -->
+<div>
+<app-game></app-game> 
+</div>
