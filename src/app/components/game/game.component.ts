@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TrackService } from '../../shared/track.service';
 
 @Component({
   selector: 'app-game',
@@ -6,42 +7,52 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  questions = [
-    { id: 1, song: 'Song 1' },
-    { id: 2, song: 'Song 2' },
-    { id: 3, song: 'Song 3' },
-    { id: 4, song: 'Song 4' },
-    { id: 5, song: 'Song 5' }
-  ];
-
-  answers = [
-    'Song 1', 'Song 2', 'Song 3', 'Song 4', 'Song 5',
-    'Red Herring 1', 'Red Herring 2', 'Red Herring 3', 'Red Herring 4', 'Red Herring 5'
-  ];
-
+  tracks: any[] = [];
+  questions: any[] = [];
+  answers: string[] = [];
   userAnswers: string[][] = [];
   feedback: string[][] = [];
   maxGuesses = 5;
   currentGuess = 0;
   gameOverMessage: string = '';
 
+  constructor(private trackService: TrackService) {}
+
   ngOnInit(): void {
-    this.initializeCurrentGuess();
+    this.trackService.tracks$.subscribe(tracks => {
+      this.tracks = tracks;
+      if (this.tracks.length > 0) {
+        this.initializeQuestionsAndAnswers();
+        this.initializeCurrentGuess();
+      }
+    });
+  }
+
+  initializeQuestionsAndAnswers() {
+    this.questions = this.tracks.slice(0, 5).map((track, index) => ({
+      id: index + 1,
+      name: track.name,
+      preview_url: track.preview_url
+    }));
+
+    this.answers = this.tracks.slice(0, 10).map(track => track.name);
+    this.answers = this.answers.sort();
   }
 
   submitAnswers() {
     const currentFeedback = this.userAnswers[this.currentGuess].map((answer, index) => {
-      if (answer === this.questions[index].song) {
+      if (answer === this.questions[index].name) {
         return 'green';
-      } else if (this.questions.some(q => q.song === answer)) {
+      } else if (this.questions.some(q => q.name === answer)) {
         return 'yellow';
       } else {
         return 'red';
       }
     });
 
+    this.feedback.push(currentFeedback);
+
     if (!this.isGameOver) {
-      this.feedback.push(currentFeedback);
       this.currentGuess++;
       this.initializeCurrentGuess();
     } else {
@@ -66,17 +77,16 @@ export class GameComponent implements OnInit {
 
     if (correctGuessCount > 0) {
       const titles = ['Maestro!', 'Virtuoso!', 'Wunderkind!', 'Expert!', 'Prodigy!'];
-      this.gameOverMessage = `You got it in ${correctGuessCount}! You're a ${titles[correctGuessCount - 1]}`;
+      this.gameOverMessage = `You got it in ${correctGuessCount} guesses! You're a ${titles[correctGuessCount - 1]}`;
     } else {
       this.gameOverMessage = 'Game over! Better luck next time.';
     }
   }
 
   initializeCurrentGuess() {
-    if (this.userAnswers.length <= this.currentGuess) {
-      this.userAnswers.push(new Array(this.questions.length).fill(''));
+    if (!this.userAnswers[this.currentGuess]) {
+      const previousGuess = this.userAnswers[this.currentGuess - 1] || new Array(this.questions.length).fill('');
+      this.userAnswers[this.currentGuess] = [...previousGuess];
     }
   }
 }
-
-

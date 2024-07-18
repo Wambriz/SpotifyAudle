@@ -1,6 +1,3 @@
-
-
-<p>game works!</p>
 <!--
 <div *ngIf="tracks">
     <h2>Random Song 1</h2>
@@ -30,15 +27,11 @@
 -->
 
 <div>
-  <h1>Guess the Songs</h1>
-
   <div class="audio-dropdown-container">
     <div class="audio-row">
       <div class="audio-container" *ngFor="let question of questions; let i = index">
-        <p>Question {{question.id}}</p>
-        <!-- Placeholder for audio player -->
-        <audio controls>
-          <source src="path/to/audio/{{question.song}}" type="audio/mpeg">
+        <audio controls *ngIf="question.preview_url">
+          <source [src]="question.preview_url" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
       </div>
