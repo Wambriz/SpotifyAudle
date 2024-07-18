@@ -1,6 +1,4 @@
-/* styles.css */
-
-.settings {
+.settings-container {
     background-color: #d0efb1;
     padding: 20px;
     border-radius: 8px;
@@ -11,33 +9,33 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.options {
+.settings-options {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
 }
 
-.option {
+.settings-option {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s;
 }
 
-.option:hover {
+.settings-option:hover {
     background-color: #e0e0e0;
 }
 
-.option.active {
+.settings-option.active {
     background-color: #B6A39E;
     color: #1e1e1e;
 }
 
-.theme-toggle {
+.settings-theme-toggle {
     margin-top: 20px;
 }
 
-button {
+.settings-button {
     padding: 10px 20px;
     cursor: pointer;
     border: none;
@@ -47,8 +45,51 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.settings-button:hover {
     background-color: #978783;
 }
 
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+/* Dark mode styles */
+body.dark-mode .settings-container {
+    background-color: #3e3e3e;
+    color: #ffffff;
+}
+
+body.dark-mode .settings-option:hover {
+    background-color: #333333;
+}
+
+body.dark-mode .settings-option.active {
+    background-color: #B3D89C;
+    color: #1e1e1e;
+}
+
+body.dark-mode .settings-button {
+    background-color: #B3D89C;
+}
+
+body.dark-mode .settings-button:hover {
+    background-color: #B3D89C;
+}

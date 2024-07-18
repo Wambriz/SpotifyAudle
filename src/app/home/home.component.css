@@ -1,16 +1,16 @@
-.home{
+.home-container {
     background-color: #b3d89c;
     border-radius: 20px;
     padding: 20px;
 }
 
-.home-card{
+.home-card {
     background-color: #d0efb1;
     border-radius: 20px;
     padding: 20px;
 }
 
-.backdrop{
+.home-backdrop {
     position: absolute;
     left: 0;
     top: 0;
@@ -18,4 +18,14 @@
     width: 68vw;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode styles */
+body.dark-mode .home-container {
+    background-color: #3e3e3e;
+    color: #ffffff;
+}
+
+body.dark-mode .home-card {
+    background-color: #575757;
 }
