@@ -40,5 +40,4 @@ export class SettingsComponent implements OnInit {
   close() {
     this.closeSettings.emit();
   }
-
 }

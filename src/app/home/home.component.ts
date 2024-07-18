@@ -13,10 +13,12 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
+
   constructor(
     private spotifyService: SpotifyService,
     private trackService: TrackService // Inject TrackService
   ) {}
+
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -53,6 +55,18 @@ export class HomeComponent implements OnInit {
   }
 
   /*
+  
+    fillTracks() {
+    for (let i = 0; i < this.amount_of_songs; i++)
+      this.randomSong = null;
+    this.loadRandomSong();
+    this.tracks.push(this.randomSong)
+    console.log("tracks:");
+
+    console.log(this.tracks);
+
+  }
+  
   loadTracks = async () => {
     try {
       console.log("Calling loadTracks");
@@ -83,7 +97,7 @@ export class HomeComponent implements OnInit {
   }
      */
 
-  toggleSettings(){
+  toggleSettings() {
     this.isSettingsOpen = !this.isSettingsOpen;
   }
 
