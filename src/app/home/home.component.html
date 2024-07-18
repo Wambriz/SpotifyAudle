@@ -1,13 +1,14 @@
-<div>
-  <h1>Audle</h1>
-</div>
-<div class="home-card">
-<div>
-  Card:
-  <h3> How to play</h3>
-  <p>this is how you play our game!</p>
-  <button>Play</button>
-</div>
+<div *ngIf="authLoading || configLoading">Loading...</div>
+<div class="home" *ngIf="!authLoading && !configLoading">
+  <div>
+    <h1>Audle</h1>
+  </div>
+  <div class="home-card">
+    <h3> How to play</h3>
+    <p>this is how you play our game!</p>
+    <button>Play</button>
+  </div>
+
 </div>
 
 
@@ -29,7 +30,7 @@
 <!-- <app-game [tracks] = "tracks"> -->
 
 
-<!-- </app-game home.component.html -->
+<!--</app-game home.component.html -->
 <div>
 <app-game></app-game> 
 </div>
