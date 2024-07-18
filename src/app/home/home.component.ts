@@ -12,7 +12,7 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor(private spotifyService: SpotifyService) {} // Inject SpotifyService
+  constructor(private spotifyService: SpotifyService) { } // Inject SpotifyService
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 
   timestamp: number = Date.now();
   isSettingsOpen = false;
-  
+
   // need a empty list to store song objects
   tracks: any;
 
@@ -59,14 +59,14 @@ export class HomeComponent implements OnInit {
 
   }
   fillTracks() {
-    for(let i = 0; i < this.amount_of_songs; i++)
-    this.randomSong = null;
+    for (let i = 0; i < this.amount_of_songs; i++)
+      this.randomSong = null;
     this.loadRandomSong();
     this.tracks.push(this.randomSong)
     console.log("tracks:");
-    
+
     console.log(this.tracks);
-    
+
   }
 
 
@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
     console.log(TOKEN_KEY);
   }
 
-  toggleSettings(){
+  toggleSettings() {
     this.isSettingsOpen = !this.isSettingsOpen;
   }
   openSettings() {

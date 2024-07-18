@@ -1,0 +1,15 @@
+<nav class="navbar">
+    <div class="container">
+        <a routerLink="/" class="navbar-brand">Audle</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a routerLink="/" routerLinkActive="active" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/leaderboard" routerLinkActive="active" class="nav-link">Leaderboard</a>
+            </li>
+        </ul>
+        <button class="settings-button" (click)="toggleSettings()">Settings</button>
+    </div>
+    <app-settings *ngIf="isSettingsOpen" (closeSettings)="closeSettings()"></app-settings>
+</nav>
