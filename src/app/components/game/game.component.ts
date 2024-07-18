@@ -60,13 +60,11 @@ export class GameComponent implements OnInit {
     }
   }
 
-  resetGame() {
-    this.userAnswers = [];
-    this.feedback = [];
-    this.currentGuess = 0;
-    this.gameOverMessage = '';
-    this.initializeCurrentGuess();
-  }
+  
+  refresh(): void {
+    window.location.reload();
+}
+
 
   get isGameOver() {
     return this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
