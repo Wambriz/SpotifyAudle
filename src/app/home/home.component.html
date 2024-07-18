@@ -1,34 +1,19 @@
 <div *ngIf="authLoading || configLoading">Loading...</div>
-<div class="home" *ngIf="!authLoading && !configLoading">
+<div *ngIf="!authLoading && !configLoading">
   <div>
     <h1>Audle</h1>
   </div>
-  <div class="home-card">
+  <div>
+    Card:
     <h3> How to play</h3>
     <p>this is how you play our game!</p>
     <button>Play</button>
   </div>
 </div>
 
-
-<button (click)="openSettings()">Settings</button>
-<app-settings *ngIf="isSettingsOpen" (closeSettings)="closeSettings()"></app-settings>
-
-
-<!-- <div *ngIf="randomSong">
-  <h2>Random Song</h2>
-  <p><strong>Title:</strong> {{ randomSong.name }}</p>
-  <p><strong>Artist:</strong> {{ randomSong.artists[0]?.name }}</p>
-  <p><strong>Album:</strong> {{ randomSong.album?.name }}</p>
-  <audio controls *ngIf="randomSong.preview_url">
-    <source [src]="randomSong.preview_url + '?t=' + timestamp" type="audio/mpeg">
-  </audio>
-  <p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
-</div> -->
-
-<app-game [tracks] = "tracks">
-
-</app-game>
+<!-- home.component.html -->
+<div>
+  <app-game></app-game> <!-- Ensure the selector matches 'app-game' -->
+</div>
 
 
-<!-- https://p.scdn.co/mp3-preview/bf226d38169446d873b9dac09ed4b7918bac5cf0?cid=74f434552d40467782bc1bc64b12b2e9 -->

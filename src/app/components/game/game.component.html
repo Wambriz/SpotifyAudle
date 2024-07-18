@@ -1,6 +1,9 @@
+
+
 <p>game works!</p>
+<!--
 <div *ngIf="tracks">
-    <h2>Random Song</h2>
+    <h2>Random Song 1</h2>
     <p><strong>Title:</strong> {{ tracks[0].name }}</p>
     <p><strong>Artist:</strong> {{ tracks[0].artists[0]?.name }}</p>
     <p><strong>Album:</strong> {{ tracks[0].album?.name }}</p>
@@ -8,5 +11,67 @@
       <source [src]="tracks.preview_url + '?t=' + timestamp" type="audio/mpeg">
     </audio>
     <p><strong>Preview Url:</strong> {{ tracks[0].preview_url }}</p>
-</div>
+</div> -->
   
+<!-- dropdown.component.html 
+<div class="dropdown">
+  <button class="dropdown-toggle">
+    {{ selectedItem }}
+  </button>
+  <div class="dropdown-menu">
+    <a
+      class="dropdown-item"
+      *ngFor="let item of items"
+      (click)="onSelect(item)"
+      >{{ item }}</a
+    >
+  </div>
+</div>
+-->
+
+<div>
+  <h1>Guess the Songs</h1>
+
+  <div class="audio-dropdown-container">
+    <div class="audio-row">
+      <div class="audio-container" *ngFor="let question of questions; let i = index">
+        <p>Question {{question.id}}</p>
+        <!-- Placeholder for audio player -->
+        <audio controls>
+          <source src="path/to/audio/{{question.song}}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <div class="dropdown-row">
+      <div class="dropdown-container" *ngFor="let question of questions; let i = index">
+        <select [(ngModel)]="userAnswers[currentGuess][i]">
+          <option *ngFor="let answer of answers" [value]="answer">{{ answer }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-container">
+    <h2>Guesses</h2>
+    <div class="guess-rows">
+      <div *ngFor="let row of userAnswers; let guessIndex = index" class="guess-row">
+        <div *ngFor="let answer of row; let i = index" 
+             class="guess-box" 
+             [style.background]="feedback[guessIndex] ? feedback[guessIndex][i] : 'white'">
+          {{ answer.slice(0, 3) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-container">
+    <button class="submit-button" (click)="submitAnswers()" [disabled]="isGameOver">Submit</button>
+  </div>
+
+  <div *ngIf="isGameOver">
+    <h2>{{ gameOverMessage }}</h2>
+    <button (click)="resetGame()">Play Again</button>
+  </div>
+</div>
