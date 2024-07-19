@@ -42,4 +42,15 @@ export class LeaderboardService {
       console.log('Initialized demo leaderboard data');
     }
   }
+
+  deleteInvalidEntries(): void {
+    const data = localStorage.getItem(this.localStorageKey);
+    if (data) {
+      let leaderboardEntries: LeaderboardEntry[] = JSON.parse(data);
+     // leaderboardEntries = leaderboardEntries.filter(entry => entry.score >= 10000 && entry.score <= 1000000);
+      localStorage.setItem(this.localStorageKey, JSON.stringify(leaderboardEntries));
+      console.log('Deleted high score entries');
+    }
+  }
+
 }

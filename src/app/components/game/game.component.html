@@ -24,11 +24,12 @@
       <div *ngFor="let row of userAnswers; let guessIndex = index" class="guess-row">
         <div *ngFor="let answer of row; let i = index" class="guess-box"
           [style.background]="feedback[guessIndex] ? feedback[guessIndex][i] : 'white'">
-          {{ answer.slice(0, 3) }}
+          {{ getDisplayText(answer) }}
         </div>
       </div>
     </div>
   </div>
+  
 
   <div class="submit-container">
     <button class="submit-button" (click)="submitAnswers()" [disabled]="isGameOver">Submit</button>

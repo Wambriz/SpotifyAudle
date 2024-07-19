@@ -172,7 +172,8 @@ export class SpotifyService {
      // available_markets: ["US"],
      // restrictions: [reason: "market"],
       limit: 35,
-      seed_genres: this.getRandomGenres(5)
+      seed_genres: ['anime'],
+      //seed_genres: this.getRandomGenres(5)
     };
     const response = await fetchFromSpotify({ token, endpoint, params });
     return response

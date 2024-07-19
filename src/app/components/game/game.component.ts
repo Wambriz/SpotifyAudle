@@ -29,6 +29,7 @@ export class GameComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.leaderboardService.deleteInvalidEntries(); 
     this.trackService.tracks$.subscribe(tracks => {
       this.tracks = tracks;
       if (this.tracks.length > 0) {
@@ -139,5 +140,13 @@ export class GameComponent implements OnInit {
   setVolume(audioPlayer: HTMLAudioElement) {
     audioPlayer.volume = 0.5;
   }
+
+  //display non standard length characters properly
+  //like Japanese
+  getDisplayText(answer: string): string {
+    const isAlphanumeric = /^[a-zA-Z0-9]+$/.test(answer);
+    return isAlphanumeric ? answer.slice(0, 3) : answer.slice(0, 2);
+  }
+
 
 }
