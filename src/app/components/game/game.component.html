@@ -22,9 +22,8 @@
     <h2>Guesses</h2>
     <div class="guess-rows">
       <div *ngFor="let row of userAnswers; let guessIndex = index" class="guess-row">
-        <div *ngFor="let answer of row; let i = index" 
-             class="guess-box" 
-             [style.background]="feedback[guessIndex] ? feedback[guessIndex][i] : 'white'">
+        <div *ngFor="let answer of row; let i = index" class="guess-box"
+          [style.background]="feedback[guessIndex] ? feedback[guessIndex][i] : 'white'">
           {{ answer.slice(0, 3) }}
         </div>
       </div>
@@ -37,9 +36,6 @@
 
   <div *ngIf="isGameOver">
     <h2>{{ gameOverMessage }}</h2>
-    <button (click)="refresh()">Play Again</button>
+    <app-gameover [score]="score"></app-gameover>
   </div>
 </div>
-
-<app-gameover *ngIf="isGameOver" [score]="score"></app-gameover>
-

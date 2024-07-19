@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private spotifyService: SpotifyService,
     private trackService: TrackService // Inject TrackService
-  ) {}
+  ) { }
 
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
         console.log("Token found in localstorage");
         this.authLoading = false;
         this.token = storedToken.value;
-        this.token = "BQAYAGmbI4LAnOzwiIKmR_eiFxu6AahxwEY7P7HFh_5Ncc9DRknZqCxawvle5nu0GDc1a_SFFip1b0mXEaaG5xbVBWRJBVTh37eMt66-w76RVHZqN-Q"
+        this.token = "BQAmIx4gjRV8rMxI_vDpQMJEUJFknDW30M8e8HI95NLdqeKxAXVQV0n0DFl265T9kLKnO4IAPM5yZPiq8x0yiV_OlUMb4-7bRLl_6XaUFRW8WnVthAY"
 
         this.trackService.fetchTracks(this.token);
         return;
@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
       localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
       this.authLoading = false;
       this.token = newToken.value;
-      this.token = "BQAYAGmbI4LAnOzwiIKmR_eiFxu6AahxwEY7P7HFh_5Ncc9DRknZqCxawvle5nu0GDc1a_SFFip1b0mXEaaG5xbVBWRJBVTh37eMt66-w76RVHZqN-Q"
+      this.token = "BQAmIx4gjRV8rMxI_vDpQMJEUJFknDW30M8e8HI95NLdqeKxAXVQV0n0DFl265T9kLKnO4IAPM5yZPiq8x0yiV_OlUMb4-7bRLl_6XaUFRW8WnVthAY"
       this.trackService.fetchTracks(this.token);
     });
   }

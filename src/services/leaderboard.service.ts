@@ -7,15 +7,19 @@ interface LeaderboardEntry {
   score: number
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class LeaderboardService {
-  private jsonURL = 'assets/leaderboard-data.json'
+  private jsonURL = 'assets/leaderboard-data.json';
   constructor(private http: HttpClient) { }
 
   getLeaderboardEntries(): Observable<LeaderboardEntry[]> {
-    return this.http.get<LeaderboardEntry[]>(this.jsonURL)
+    return this.http.get<LeaderboardEntry[]>(this.jsonURL);
+  }
+
+  saveLeaderboardEntry(entry: LeaderboardEntry): void {
+    console.log('Saving leaderboard entry:', entry);
+    // Implement logic
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TrackService } from '../../shared/track.service';
-import fetchFromSpotify, { request } from "../../../services/api";
+import { LeaderboardService } from '../../../services/leaderboard.service';
 
 @Component({
   selector: 'app-game',
@@ -17,12 +17,11 @@ export class GameComponent implements OnInit {
   currentGuess = 0;
   gameOverMessage: string = '';
   score: number = 0;
-  isGameOver : boolean = false;
+  isGameOver: boolean = false;
 
-  constructor(private trackService: TrackService) {}
+  constructor(private trackService: TrackService, private leaderboardService: LeaderboardService) { }
 
   ngOnInit(): void {
-    
     this.trackService.tracks$.subscribe(tracks => {
       this.tracks = tracks;
       if (this.tracks.length > 0) {
@@ -59,22 +58,33 @@ export class GameComponent implements OnInit {
     if (!this.isGameOver) {
       this.currentGuess++;
       this.initializeCurrentGuess();
-      this.checkGameState()
+      this.checkGameState();
     } else {
       this.displayGameOverMessage();
     }
-    console.log(this.isGameOver);
-    
   }
 
-  
-  refresh(): void {
-    window.location.reload();
-}
-
-
   checkGameState() {
-    this.isGameOver = this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
+    const allGreen = this.feedback.some(f => f.every(box => box === 'green'));
+    const maxGuessesReached = this.currentGuess >= this.maxGuesses;
+
+    if (allGreen) {
+      this.calculateScore();
+      this.isGameOver = true;
+    } else if (maxGuessesReached) {
+      this.isGameOver = true;
+    }
+  }
+
+  calculateScore() {
+    const basePoints = 100;
+    const penaltyPerGuess = 10;
+    const triesUsed = this.currentGuess + 1;
+
+    this.score = basePoints - (penaltyPerGuess * (triesUsed - 1));
+    if (this.score < 0) {
+      this.score = 0;
+    }
   }
 
   displayGameOverMessage() {
@@ -82,7 +92,7 @@ export class GameComponent implements OnInit {
 
     if (correctGuessCount > 0) {
       const titles = ['Maestro!', 'Virtuoso!', 'Wunderkind!', 'Expert!', 'Prodigy!'];
-      this.gameOverMessage = `You got it in ${correctGuessCount} guesses! You're a ${titles[correctGuessCount - 1]}`;
+      this.gameOverMessage = `You got it in ${correctGuessCount} guesses! You're a ${titles[correctGuessCount - 1]}. Your score is ${this.score}.`;
     } else {
       this.gameOverMessage = 'Game over! Better luck next time.';
     }
@@ -93,6 +103,10 @@ export class GameComponent implements OnInit {
       const previousGuess = this.userAnswers[this.currentGuess - 1] || new Array(this.questions.length).fill('');
       this.userAnswers[this.currentGuess] = [...previousGuess];
     }
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   forceEnd() {
