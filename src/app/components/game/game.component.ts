@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TrackService } from '../../shared/track.service';
+import fetchFromSpotify, { request } from "../../../services/api";
 
 @Component({
   selector: 'app-game',
@@ -12,21 +13,57 @@ export class GameComponent implements OnInit {
   answers: string[] = [];
   userAnswers: string[][] = [];
   feedback: string[][] = [];
-  maxGuesses = 5;
+  maxGuesses: number = 5;
   currentGuess = 0;
   gameOverMessage: string = '';
+  score: number = 0;
+  isGameOver : boolean = false;
+
+  // genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
+  // selectedGenre: String = "";
+  // authLoading: boolean = false;
+  // configLoading: boolean = false;
+  // token: String = "";
+  // timestamp: number = Date.now();
 
   constructor(private trackService: TrackService) {}
 
   ngOnInit(): void {
-    this.trackService.tracks$.subscribe(tracks => {
-      this.tracks = tracks;
-      if (this.tracks.length > 0) {
-        this.initializeQuestionsAndAnswers();
-        this.initializeCurrentGuess();
-      }
-    });
+    
+    // this.trackService.tracks$.subscribe(tracks => {
+    //   this.tracks = tracks;
+    //   if (this.tracks.length > 0) {
+    //     this.initializeQuestionsAndAnswers();
+    //     this.initializeCurrentGuess();
+    //   }
+    // });
   }
+
+  // onPlay(): void {
+  //   this.authLoading = true;
+  //   const storedTokenString = localStorage.getItem(TOKEN_KEY);
+  //   if (storedTokenString) {
+  //     const storedToken = JSON.parse(storedTokenString);
+  //     if (storedToken.expiration > Date.now()) {
+  //       console.log("Token found in localstorage");
+  //       this.authLoading = false;
+  //       this.token = storedToken.value;
+  //       this.trackService.fetchTracks(this.token);
+  //       return;
+  //     }
+  //   }
+  //   console.log("Sending request to AWS endpoint");
+  //   request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
+  //     const newToken = {
+  //       value: access_token,
+  //       expiration: Date.now() + (expires_in - 20) * 1000,
+  //     };
+  //     localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
+  //     this.authLoading = false;
+  //     this.token = newToken.value;
+  //     this.trackService.fetchTracks(this.token);
+  //   });
+  // }
 
   initializeQuestionsAndAnswers() {
     this.questions = this.tracks.slice(0, 5).map((track, index) => ({
@@ -66,7 +103,7 @@ export class GameComponent implements OnInit {
 }
 
 
-  get isGameOver() {
+  checkGameState() {
     return this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
   }
 
@@ -86,5 +123,9 @@ export class GameComponent implements OnInit {
       const previousGuess = this.userAnswers[this.currentGuess - 1] || new Array(this.questions.length).fill('');
       this.userAnswers[this.currentGuess] = [...previousGuess];
     }
+  }
+
+  forceEnd() {
+    this.isGameOver = true;
   }
 }

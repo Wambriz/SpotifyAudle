@@ -1,4 +1,4 @@
-.settings-container {
+.over-container {
     background-color: #d0efb1;
     padding: 20px;
     border-radius: 8px;
@@ -9,33 +9,33 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.settings-options {
+.over-options {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
 }
 
-.settings-option {
+.over-option {
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s;
 }
 
-.settings-option:hover {
+.over-option:hover {
     background-color: #e0e0e0;
 }
 
-.settings-option.active {
+.over-option.active {
     background-color: #B6A39E;
     color: #1e1e1e;
 }
 
-.settings-theme-toggle {
+.over-theme-toggle {
     margin-top: 20px;
 }
 
-.settings-button {
+.over-button {
     padding: 10px 20px;
     cursor: pointer;
     border: none;
@@ -45,7 +45,7 @@
     transition: background-color 0.3s;
 }
 
-.settings-button:hover {
+.over-button:hover {
     background-color: #978783;
 }
 
@@ -72,30 +72,24 @@
 }
 
 /* Dark mode styles */
-body.dark-mode .settings-container {
+body.dark-mode .over-container {
     background-color: #3e3e3e;
-    color: #141414;
+    color: #ffffff;
 }
 
-body.dark-mode .settings-option:hover {
+body.dark-mode .over-option:hover {
     background-color: #333333;
-    color: #1e1e1e;
 }
 
-body.dark-mode .settings-option.active {
+body.dark-mode .over-option.active {
     background-color: #B3D89C;
     color: #1e1e1e;
 }
 
-body.dark-mode .settings-button {
+body.dark-mode .over-button {
     background-color: #B3D89C;
 }
 
-body.dark-mode .settings-button:hover {
+body.dark-mode .over-button:hover {
     background-color: #B3D89C;
-}
-
-body.dark-mode .settings-h {
-    color: #1e1e1e;
-    text-decoration-color: #141414;
 }
