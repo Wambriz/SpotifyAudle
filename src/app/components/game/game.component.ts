@@ -19,51 +19,18 @@ export class GameComponent implements OnInit {
   score: number = 0;
   isGameOver : boolean = false;
 
-  // genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
-  // selectedGenre: String = "";
-  // authLoading: boolean = false;
-  // configLoading: boolean = false;
-  // token: String = "";
-  // timestamp: number = Date.now();
-
   constructor(private trackService: TrackService) {}
 
   ngOnInit(): void {
     
-    // this.trackService.tracks$.subscribe(tracks => {
-    //   this.tracks = tracks;
-    //   if (this.tracks.length > 0) {
-    //     this.initializeQuestionsAndAnswers();
-    //     this.initializeCurrentGuess();
-    //   }
-    // });
+    this.trackService.tracks$.subscribe(tracks => {
+      this.tracks = tracks;
+      if (this.tracks.length > 0) {
+        this.initializeQuestionsAndAnswers();
+        this.initializeCurrentGuess();
+      }
+    });
   }
-
-  // onPlay(): void {
-  //   this.authLoading = true;
-  //   const storedTokenString = localStorage.getItem(TOKEN_KEY);
-  //   if (storedTokenString) {
-  //     const storedToken = JSON.parse(storedTokenString);
-  //     if (storedToken.expiration > Date.now()) {
-  //       console.log("Token found in localstorage");
-  //       this.authLoading = false;
-  //       this.token = storedToken.value;
-  //       this.trackService.fetchTracks(this.token);
-  //       return;
-  //     }
-  //   }
-  //   console.log("Sending request to AWS endpoint");
-  //   request(AUTH_ENDPOINT).then(({ access_token, expires_in }) => {
-  //     const newToken = {
-  //       value: access_token,
-  //       expiration: Date.now() + (expires_in - 20) * 1000,
-  //     };
-  //     localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
-  //     this.authLoading = false;
-  //     this.token = newToken.value;
-  //     this.trackService.fetchTracks(this.token);
-  //   });
-  // }
 
   initializeQuestionsAndAnswers() {
     this.questions = this.tracks.slice(0, 5).map((track, index) => ({
@@ -92,9 +59,12 @@ export class GameComponent implements OnInit {
     if (!this.isGameOver) {
       this.currentGuess++;
       this.initializeCurrentGuess();
+      this.checkGameState()
     } else {
       this.displayGameOverMessage();
     }
+    console.log(this.isGameOver);
+    
   }
 
   
@@ -104,7 +74,7 @@ export class GameComponent implements OnInit {
 
 
   checkGameState() {
-    return this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
+    this.isGameOver = this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
   }
 
   displayGameOverMessage() {

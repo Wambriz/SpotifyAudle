@@ -39,8 +39,7 @@
     <h2>{{ gameOverMessage }}</h2>
     <button (click)="refresh()">Play Again</button>
   </div>
-  <app-settings *ngIf="isGameOver"></app-settings>
 </div>
 
-<app-settings *ngIf="isGameOver" score="score"></app-settings>
+<app-gameover *ngIf="isGameOver" [score]="score"></app-gameover>
 
