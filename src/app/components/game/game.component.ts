@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, QueryList, ViewChildren, OnInit, ElementRef, Renderer2} from '@angular/core';
 import { TrackService } from '../../shared/track.service';
 import { LeaderboardService } from '../../../services/leaderboard.service';
 import { Router } from '@angular/router';
@@ -23,7 +23,9 @@ export class GameComponent implements OnInit {
   constructor(
     private trackService: TrackService,
     private leaderboardService: LeaderboardService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
+
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,19 @@ export class GameComponent implements OnInit {
       }
     });
   }
+
+  @ViewChildren('audioPlayer') audioPlayers!: QueryList<ElementRef<HTMLAudioElement>>;
+
+  ngAfterViewInit(): void {
+    this.audioPlayers.changes.subscribe((players: QueryList<ElementRef<HTMLAudioElement>>) => {
+      players.forEach(audioPlayer => {
+        this.renderer.setProperty(audioPlayer.nativeElement, 'volume', 0.1); // Set volume to 10%
+      });
+    });
+  }
+
+
+
 
   initializeQuestionsAndAnswers() {
     this.questions = this.tracks.slice(0, 5).map((track, index) => ({
@@ -81,8 +96,17 @@ export class GameComponent implements OnInit {
   }
 
   calculateScore() {
-    this.score = this.feedback.reduce((total, feedbackRow) => {
-      return total + feedbackRow.filter(box => box === 'green').length * 10;
+    this.score = this.feedback.reduce((total, feedbackRow, guessIndex) => {
+      const baseScore = Math.pow(10, 5 - guessIndex); // Calculate the base score for each attempt
+      return total + feedbackRow.reduce((rowTotal, box) => {
+        if (box === 'green') {
+          return rowTotal + (2 * baseScore);
+        } else if (box === 'yellow') {
+          return rowTotal + (1 * baseScore);
+        } else {
+          return rowTotal;
+        }
+      }, 0);
     }, 0);
   }
 
@@ -111,4 +135,9 @@ export class GameComponent implements OnInit {
   handleScoreSaved() {
     this.router.navigate(['/']); // Navigate to home page
   }
+  
+  setVolume(audioPlayer: HTMLAudioElement) {
+    audioPlayer.volume = 0.5;
+  }
+
 }

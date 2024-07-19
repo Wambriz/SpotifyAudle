@@ -2,7 +2,7 @@
   <div class="audio-dropdown-container">
     <div class="audio-row">
       <div class="audio-container" *ngFor="let question of questions; let i = index">
-        <audio controls *ngIf="question.preview_url">
+        <audio #audioPlayer controls *ngIf="question.preview_url">
           <source [src]="question.preview_url" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>

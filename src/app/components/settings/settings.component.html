@@ -1,15 +1,15 @@
 <div class="modal-overlay" (click)="close()">
     <div (click)="$event.stopPropagation()">
         <div class="settings-container">
-            <h1>Settings</h1>
+        <!-- <h1>Settings</h1>--> 
             <div class="settings-difficulty">
-                <h2 class="settings-h">Attempts</h2>
+                <!-- <h2 class="settings-h">Attempts</h2>
                 <div class="settings-options">
                     <div class="settings-option" *ngFor="let option of difficultyOptions"
                         [ngClass]="{'active': option === selectedDifficulty}" (click)="setDifficulty(option)">
                         {{ option }}
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="settings-theme-toggle">
                 <h2 class="settings-h">Toggle Theme</h2>
