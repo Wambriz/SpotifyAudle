@@ -59,11 +59,15 @@ export class GameComponent implements OnInit {
     });
 
     this.feedback.push(currentFeedback);
+    this.checkGameState()
+
 
     if (!this.isGameOver) {
       this.currentGuess++;
       this.initializeCurrentGuess();
+
       this.checkGameState();
+
     } else {
       this.displayGameOverMessage();
     }

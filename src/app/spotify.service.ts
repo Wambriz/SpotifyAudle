@@ -171,7 +171,7 @@ export class SpotifyService {
       market: "US",
      // available_markets: ["US"],
      // restrictions: [reason: "market"],
-      limit: 15,
+      limit: 35,
       seed_genres: this.getRandomGenres(5)
     };
     const response = await fetchFromSpotify({ token, endpoint, params });

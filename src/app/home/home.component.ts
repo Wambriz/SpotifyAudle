@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
         console.log("Token found in localstorage");
         this.authLoading = false;
         this.token = storedToken.value;
+
         this.token = "BQBzLzkxG1D-tYx-VgJm6AFe1Pl3B9nm9N5OmmQBA_iS_Jl1VyqpQEOSszcRisBhTfE-34TOOZ0PjYgzCabDFot0x0zMcrSwvoW_9FLZNWlVElVxNuo"
 
         this.trackService.fetchTracks(this.token);
@@ -79,6 +80,7 @@ export class HomeComponent implements OnInit {
       this.authLoading = false;
       this.token = newToken.value;
       this.token = "BQBzLzkxG1D-tYx-VgJm6AFe1Pl3B9nm9N5OmmQBA_iS_Jl1VyqpQEOSszcRisBhTfE-34TOOZ0PjYgzCabDFot0x0zMcrSwvoW_9FLZNWlVElVxNuo"
+
       this.trackService.fetchTracks(this.token);
     });
   }
