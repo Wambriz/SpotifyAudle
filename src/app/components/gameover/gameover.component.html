@@ -1,7 +1,9 @@
 <div class="modal-overlay">
-  <div>
-      <div class="over-container">
-          <h1>Game Over</h1>
-      </div>
+  <div class="over-container">
+    <h1>Game Over</h1>
+    <p>Your score is: {{ score }}</p>
+    <input type="text" [(ngModel)]="username" placeholder="Enter your username" />
+    <button (click)="saveScore()">Save Score</button>
+    <button (click)="close()">Close</button>
   </div>
 </div>
