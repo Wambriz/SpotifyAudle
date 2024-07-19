@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TrackService } from '../../shared/track.service';
+import fetchFromSpotify, { request } from "../../../services/api";
 
 @Component({
   selector: 'app-game',
@@ -12,13 +13,16 @@ export class GameComponent implements OnInit {
   answers: string[] = [];
   userAnswers: string[][] = [];
   feedback: string[][] = [];
-  maxGuesses = 5;
+  maxGuesses: number = 5;
   currentGuess = 0;
   gameOverMessage: string = '';
+  score: number = 0;
+  isGameOver : boolean = false;
 
   constructor(private trackService: TrackService) {}
 
   ngOnInit(): void {
+    
     this.trackService.tracks$.subscribe(tracks => {
       this.tracks = tracks;
       if (this.tracks.length > 0) {
@@ -55,9 +59,12 @@ export class GameComponent implements OnInit {
     if (!this.isGameOver) {
       this.currentGuess++;
       this.initializeCurrentGuess();
+      this.checkGameState()
     } else {
       this.displayGameOverMessage();
     }
+    console.log(this.isGameOver);
+    
   }
 
   
@@ -66,8 +73,8 @@ export class GameComponent implements OnInit {
 }
 
 
-  get isGameOver() {
-    return this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
+  checkGameState() {
+    this.isGameOver = this.feedback.some(f => f.every(box => box === 'green')) || this.currentGuess >= this.maxGuesses;
   }
 
   displayGameOverMessage() {
@@ -86,5 +93,9 @@ export class GameComponent implements OnInit {
       const previousGuess = this.userAnswers[this.currentGuess - 1] || new Array(this.questions.length).fill('');
       this.userAnswers[this.currentGuess] = [...previousGuess];
     }
+  }
+
+  forceEnd() {
+    this.isGameOver = true;
   }
 }

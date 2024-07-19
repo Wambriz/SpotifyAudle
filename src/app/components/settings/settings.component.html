@@ -3,7 +3,7 @@
         <div class="settings-container">
             <h1>Settings</h1>
             <div class="settings-difficulty">
-                <h2>Music Playtime</h2>
+                <h2 class="settings-h">Attempts</h2>
                 <div class="settings-options">
                     <div class="settings-option" *ngFor="let option of difficultyOptions"
                         [ngClass]="{'active': option === selectedDifficulty}" (click)="setDifficulty(option)">
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="settings-theme-toggle">
-                <h2>Toggle Theme</h2>
+                <h2 class="settings-h">Toggle Theme</h2>
                 <button class="settings-button" (click)="toggleTheme()">
                     {{ theme }}
                 </button>

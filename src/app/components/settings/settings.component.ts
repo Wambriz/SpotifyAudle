@@ -7,8 +7,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
   @Output() closeSettings = new EventEmitter<void>();
-  difficultyOptions = ['5 secs', '10 secs', '15 secs'];
-  selectedDifficulty = '5 secs';
+  difficultyOptions = ['3', '5', '7'];
+  selectedDifficulty = '5';
   theme = 'Light Mode';
 
   constructor() { }

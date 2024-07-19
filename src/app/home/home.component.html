@@ -5,32 +5,10 @@
   </div>
   <div class="home-card">
     <h3> How to play</h3>
-    <p>this is how you play our game!</p>
-    <button>Play</button>
+    <p> Match the Song to the right Sound! </p>
+    <p> Green = Correct Song and Position</p>
+    <p> Yellow = Correct Song in wrong position</p>
+    <p> Red = Incorrect Song</p>
+    <a routerLink="/play" routerLinkActive="active" class="nav-link"><button (click)="onPlay()">Play</button></a>
   </div>
-
-</div>
-
-
-<button (click)="openSettings()">Settings</button>
-<app-settings *ngIf="isSettingsOpen" (closeSettings)="closeSettings()"></app-settings>
-
-
-<!-- <div *ngIf="randomSong">
-<h2>Random Song</h2>
-<p><strong>Title:</strong> {{ randomSong.name }}</p>
-<p><strong>Artist:</strong> {{ randomSong.artists[0]?.name }}</p>
-<p><strong>Album:</strong> {{ randomSong.album?.name }}</p>
-<audio controls *ngIf="randomSong.preview_url">
-  <source [src]="randomSong.preview_url + '?t=' + timestamp" type="audio/mpeg">
-</audio>
-<p><strong>Preview Url:</strong> {{ randomSong.preview_url }}</p>
-</div> -->
-
-<!-- <app-game [tracks] = "tracks"> -->
-
-
-<!--</app-game home.component.html -->
-<div>
-  <app-game></app-game>
 </div>
