@@ -34,9 +34,9 @@ export class LeaderboardService {
     const data = localStorage.getItem(this.localStorageKey);
     if (!data) {
       const demoEntries: LeaderboardEntry[] = [
-        { name: 'Alice', score: 10 },
-        { name: 'Bob', score: 40 },
-        { name: 'Charlie', score: 50 },
+        { name: 'Alice', score: 30 },
+        { name: 'Bob', score: 20 },
+        { name: 'Charlie', score: 10 },
       ];
       localStorage.setItem(this.localStorageKey, JSON.stringify(demoEntries));
       console.log('Initialized demo leaderboard data');

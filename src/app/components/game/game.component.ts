@@ -59,16 +59,13 @@ export class GameComponent implements OnInit {
     });
 
     this.feedback.push(currentFeedback);
-    this.checkGameState()
-
 
     if (!this.isGameOver) {
       this.currentGuess++;
       this.initializeCurrentGuess();
-
       this.checkGameState();
-
     } else {
+      this.calculateScore();
       this.displayGameOverMessage();
     }
   }
@@ -77,23 +74,16 @@ export class GameComponent implements OnInit {
     const allGreen = this.feedback.some(f => f.every(box => box === 'green'));
     const maxGuessesReached = this.currentGuess >= this.maxGuesses;
 
-    if (allGreen) {
+    if (allGreen || maxGuessesReached) {
       this.calculateScore();
-      this.isGameOver = true;
-    } else if (maxGuessesReached) {
       this.isGameOver = true;
     }
   }
 
   calculateScore() {
-    const basePoints = 100;
-    const penaltyPerGuess = 10;
-    const triesUsed = this.currentGuess + 1;
-
-    this.score = basePoints - (penaltyPerGuess * (triesUsed - 1));
-    if (this.score < 0) {
-      this.score = 0;
-    }
+    this.score = this.feedback.reduce((total, feedbackRow) => {
+      return total + feedbackRow.filter(box => box === 'green').length * 10;
+    }, 0);
   }
 
   displayGameOverMessage() {
@@ -103,7 +93,7 @@ export class GameComponent implements OnInit {
       const titles = ['Maestro!', 'Virtuoso!', 'Wunderkind!', 'Expert!', 'Prodigy!'];
       this.gameOverMessage = `You got it in ${correctGuessCount} guesses! You're a ${titles[correctGuessCount - 1]}. Your score is ${this.score}.`;
     } else {
-      this.gameOverMessage = 'Game over! Better luck next time.';
+      this.gameOverMessage = `Game over! Your score is ${this.score}. Better luck next time.`;
     }
   }
 
