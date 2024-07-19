@@ -36,6 +36,7 @@
 
   <div *ngIf="isGameOver">
     <h2>{{ gameOverMessage }}</h2>
-    <app-gameover [score]="score"></app-gameover>
+    <app-gameover [score]="score" (closeGameover)="handleGameoverClose()"
+      (scoreSaved)="handleScoreSaved()"></app-gameover>
   </div>
 </div>

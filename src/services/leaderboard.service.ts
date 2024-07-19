@@ -1,25 +1,45 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 interface LeaderboardEntry {
-  name: string
-  score: number
+  name: string;
+  score: number;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LeaderboardService {
-  private jsonURL = 'assets/leaderboard-data.json';
-  constructor(private http: HttpClient) { }
+  private localStorageKey = 'leaderboard-data';
+
+  constructor() {
+    this.initializeDemoData();
+  }
 
   getLeaderboardEntries(): Observable<LeaderboardEntry[]> {
-    return this.http.get<LeaderboardEntry[]>(this.jsonURL);
+    const data = localStorage.getItem(this.localStorageKey);
+    const leaderboardEntries = data ? JSON.parse(data) : [];
+    return of(leaderboardEntries);
   }
 
   saveLeaderboardEntry(entry: LeaderboardEntry): void {
+    const data = localStorage.getItem(this.localStorageKey);
+    const leaderboardEntries = data ? JSON.parse(data) : [];
+    leaderboardEntries.push(entry);
+    localStorage.setItem(this.localStorageKey, JSON.stringify(leaderboardEntries));
     console.log('Saving leaderboard entry:', entry);
-    // Implement logic
+  }
+
+  private initializeDemoData(): void {
+    const data = localStorage.getItem(this.localStorageKey);
+    if (!data) {
+      const demoEntries: LeaderboardEntry[] = [
+        { name: 'Alice', score: 10 },
+        { name: 'Bob', score: 40 },
+        { name: 'Charlie', score: 50 },
+      ];
+      localStorage.setItem(this.localStorageKey, JSON.stringify(demoEntries));
+      console.log('Initialized demo leaderboard data');
+    }
   }
 }

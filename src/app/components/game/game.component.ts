@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TrackService } from '../../shared/track.service';
 import { LeaderboardService } from '../../../services/leaderboard.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -19,7 +20,11 @@ export class GameComponent implements OnInit {
   score: number = 0;
   isGameOver: boolean = false;
 
-  constructor(private trackService: TrackService, private leaderboardService: LeaderboardService) { }
+  constructor(
+    private trackService: TrackService,
+    private leaderboardService: LeaderboardService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.trackService.tracks$.subscribe(tracks => {
@@ -105,11 +110,11 @@ export class GameComponent implements OnInit {
     }
   }
 
-  refresh(): void {
-    window.location.reload();
+  handleGameoverClose() {
+    this.router.navigate(['/']); // Navigate to home page
   }
 
-  forceEnd() {
-    this.isGameOver = true;
+  handleScoreSaved() {
+    this.router.navigate(['/']); // Navigate to home page
   }
 }
